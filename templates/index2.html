@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dat.GUI Example</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
+</head>
+<body>
+  <script>
+    // Main settings object
+    const settings = {
+      selectedOption: "Option 1",
+      displayValue:"Option 1",
+    };
+
+    // Options for the select box
+    const options = ["Option 1", "Option 2", "Option 3"];
+
+    // dat.GUI instance
+    const gui = new dat.GUI();
+
+    // Reference to dynamically generated sub-nodes
+    let subNodes = [];
+
+    // Function to clear sub-nodes
+    function clearSubNodes() {
+      subNodes.forEach(node => gui.remove(node));
+      subNodes = []; // Reset the sub-nodes array
+    }
+
+    // Function to generate sub-nodes based on the selected option
+    function generateSubNodes(option) {
+      clearSubNodes(); // Clear existing sub-nodes
+
+      // Add new sub-nodes dynamically based on the selected option
+      if (option === "Option 1") {
+        const node1 = gui.add({ value: 10 }, "value").name("Sub Node 1");
+        console.log(option); 
+        subNodes.push(node1);
+      } else if (option === "Option 2") {
+        const node2 = gui.add({ value: 20 }, "value").name("Sub Node 2");
+        console.log(option);
+        subNodes.push(node2);  
+      }
+      else if (option == "Option 3"){
+        const node3 = gui.add({ value: 30 }, "value").name("Sub Node 3");
+        console.log(option); 
+        subNodes.push(node3);
+      } 
+     
+    }
+    const displaydat = gui.add(settings,'displayValue').listen();
+    // Add a select box
+    const selectController = gui.add(settings, "selectedOption", options);
+    //const displaydat = gui.add(settings,'displayValue').listen();
+    // Listen for changes to the select box
+    selectController.onChange(value => {
+      generateSubNodes(value); // Regenerate sub-nodes based on the new option
+      settings.displayValue=value;
+    });
+
+    // Initialize with default option
+    generateSubNodes(settings.selectedOption);
+  </script>
+</body>
+</html>

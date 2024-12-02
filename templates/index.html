@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dat.GUI Example</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
+</head>
+<body>
+  <script>
+    // Object with properties to be controlled
+    const settings = {
+      selectedOption: "Option 1",
+      displayValue: "Option 1",
+    };
+
+    // List of options
+    const options = ["Option 1", "Option 2", "Option 3", "Option 4"];
+
+    // Initialize dat.GUI
+    const gui = new dat.GUI();
+
+    // Add dropdown (select box)
+    //const selectController = gui.add(settings, 'selectedOption', options);
+
+    // Add a text box to display the selected option
+    const displayController = gui.add(settings, 'displayValue').listen();
+    const selectController = gui.add(settings, 'selectedOption', options);
+    // Update the text box when the select box changes
+    selectController.onChange(function (value) {
+      settings.displayValue = value;
+    });
+  </script>
+</body>
+</html>
